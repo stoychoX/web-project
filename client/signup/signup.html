@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - VSTCS </title>
+    <link rel="stylesheet" href="signup.css">
+    <script defer src="./signup.js"></script>
+</head>
+<body>
+
+<div class="signup-container" id="registration-div">
+    <h2> Sign Up </h2>
+    <form class="signup-form" id="signup-form">
+        <div class="form-group">
+            <label for="username"> Username: </label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="email"> Email: </label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password"> Password: </label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="password"> Repeat password: </label>
+            <input type="password" id="password_repeat" name="password_repeat" required>
+        </div>
+        <div class="form-group">
+            <button type="button" onclick="submitForm()"> Sign Up </button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

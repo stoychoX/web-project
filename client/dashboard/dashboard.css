@@ -1,0 +1,89 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #1E1E1E;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+nav {
+    background-color: #fff;
+    padding: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.config-list ul {
+    white-space: nowrap;
+}
+
+.config-list ul li {
+    list-style-type: none;
+    border-top: 1px solid #1E1E1E;
+    border-bottom: 1px solid #1E1E1E;
+    margin-bottom: 1%;
+    transition: 0.5s;
+    display: block;
+}
+
+.config-list ul li a {
+    display: block;
+    border-right: 1px solid #1E1E1E;
+}
+
+.config-list ul li a span {
+    position: block;
+    display: inline-block;
+}
+
+.config-list ul li a span:nth-child(1) {
+    width: 30px;
+    border-left: 1px solid #1E1E1E;
+    padding: 10px;
+    transition: 0.5s;
+    color: #1E1E1E;
+    font-size: x-large;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.config-list ul li:hover a span:nth-child(1) {
+    color: #2196F3;
+}
+
+main {
+    padding: 20px;
+    padding-bottom: 50px;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+footer {
+    background-color: #1E1E1E;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

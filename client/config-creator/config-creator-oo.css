@@ -1,0 +1,441 @@
+/* Main div styles */
+body {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: large;
+    background-color: #1E1E1E;
+    display: flex;
+    height: 100%;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* JSON display styles */
+.json-display {
+    background-color: #1E1E1E;
+    color: #ffffff;
+    text-align: center;
+    position: static;
+    width: 30%;
+}
+
+.jsonHolder {
+    text-align: left;
+}
+
+.taskConfiguration,
+.taskDescription {
+    background-color: #1E1E1E;
+    color: #ffffff;
+    height: min-content(100%, 100vh);
+    width: 30%;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.taskConfiguration {
+    position: static;
+}
+
+.taskDescription {
+    display: none;
+}
+
+.labelTask,
+.typeTask,
+.commandTask,
+.isBackgroundTask,
+.argsTask,
+.group,
+.problemMatcherWrapperTask,
+.presentationOptionsWrapperTask,
+.problemMatcherWrapperTask,
+.runOptionsWrapper,
+.saveTaskWrapper,
+.taskPurpose,
+.removeTask {
+    margin: 10px 10px 10px 10px;
+    background: linear-gradient(to right, #084472, #1E1E1E);
+    align-items: center;
+    display: grid;
+    place-items: center;
+}
+
+/* Create config button styles. */
+.create {
+    background-color: #569cd6;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 2%;
+    width: 40%;
+    height: 5%;
+}
+
+.create:hover {
+    background-color: #2196F3;
+}
+
+.baseTaskConfiguration {
+    margin-bottom: 20px;
+}
+
+.typeConfig,
+.commandConfig,
+.isBackgroundConfig,
+.commandOptionsConfig,
+.argsConfig,
+.tasksWrapper,
+.specificOSTasks,
+.presentationOptionsConfig,
+.problemMatcherWrapper {
+    margin: 10px 10px 10px 10px;
+    background: linear-gradient(to right, #084472, #1E1E1E);
+    align-items: center;
+    display: grid;
+    place-items: center;
+}
+
+.problemMatcherHolder,
+.presentationOptionsHolderTask,
+.problemMatcherHolderTask,
+.runOptionsHolder {
+    font-size: small;
+    max-width: 350px;
+    word-wrap: break-word;
+}
+
+.isBackgroundConfig,
+.isBackgroundTask,
+.isDefaultTask {
+    display: flex;
+}
+
+.specificOSTasks {
+    display: flex;
+}
+
+button {
+    background-color: #569cd6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
+    width: 120px;
+    height: 35px;
+}
+
+label {
+    margin: 10px;
+    text-align: center;
+}
+
+.taskConfiguration input[type="text"],
+.taskConfiguration select,
+.taskDescription input[type="text"],
+.taskDescription select {
+    width: 100%;
+    margin: 10px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.taskConfiguration input[type="text"],
+.taskDescription input[type="text"],
+.runOptionsBackground input[type='text'],
+.commandOptionsBackground input[type='text'],
+.presentationOptionsBackground input[type='text'],
+.backgroundMatcherBackground input[type='text'],
+.problemPatternBackground input[type='text'],
+.includeExcludeBackground input[type='text'],
+.problemMatcherBackground input[type='text'] {
+    border: 0;
+    border-bottom: 2px solid #9b9b9b;
+    outline: 0;
+    font-size: 1rem;
+    color: #fff;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+
+.taskConfiguration input[type="text"]:focus,
+.taskDescription input[type="text"]:focus,
+.runOptionsBackground input[type='text']:focus,
+.commandOptionsBackground input[type='text']:focus,
+.presentationOptionsBackground input[type='text']:focus,
+.backgroundMatcherBackground input[type='text']:focus,
+.problemPatternBackground input[type='text']:focus,
+.includeExcludeBackground input[type='text']:focus,
+.problemMatcherBackground input[type='text']:focus {
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, #084472, #0f07e95e);
+    border-image-slice: 1;
+}
+
+input[type="checkbox"] {
+    width: 15px;
+}
+
+#type-select,
+#type-select-base,
+#select-group {
+    width: auto;
+}
+
+#arguments {
+    border: 1px solid #ccc;
+    margin: 10px;
+}
+
+.runOptionsBackground,
+.commandOptionsBackground,
+.presentationOptionsBackground,
+.problemMatcherBackground,
+.includeExcludeBackground,
+.problemPatternBackground,
+.backgroundMatcherBackground {
+    background-color: rgba(53, 52, 52, 0.909);
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+
+    justify-content: center;
+    align-items: center;
+
+    display: none;
+}
+
+.problemMatcherBackground div {
+    display: block;
+}
+
+.includeExcludeBackground,
+.problemPatternBackground,
+.backgroundMatcherBackground {
+    z-index: 1;
+}
+
+.runOptions,
+.commandOptions,
+.presentationOptions,
+.problemMatcher,
+.includeExclude,
+.problemPattern,
+.backgroundMatcher {
+    background: linear-gradient(to right, #084472, #0f07e95e);
+    margin: 20px;
+    align-items: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.commandOptions,
+.presentationOptions,
+.runOptions {
+    display: grid;
+
+    width: 290px;
+    height: auto;
+}
+
+.commandOptions input[type='text'],
+.presentationOptions input[type='text'],
+.includeExclude input[type='text'],
+.problemMatcher input[type='text'],
+.runOptions input[type='text'] {
+    margin: 5px;
+    text-align: center;
+}
+
+.presentationOptions label,
+.runOptions label {
+    margin: 0px;
+    text-align: center;
+}
+
+.backgroundMatcher label,
+.backgroundMatcher input[type='checkbox'] {
+    margin: 0px;
+}
+
+.presentationOptions input[type='checkbox'] {
+    width: 10px !important;
+}
+
+.presentationOptions input[type='text'] {
+    width: 150px;
+    position: relative;
+    left: 57px;
+}
+
+.problemMatcher input[type='text'],
+.includeExclude input[type='text'] {
+    width: 150px;
+    position: relative;
+    left: 0px;
+}
+
+.problemMatcher button,
+.includeExclude button {
+    margin: 5px;
+}
+
+.fileLocationWrapper,
+.patternWrapper,
+.backgrounMatcherWrapper {
+    display: grid !important;
+    position: relative;
+    align-items: center;
+    place-items: center;
+}
+
+.presentationOptions select {
+    width: 100px;
+    margin: 10px;
+    position: relative;
+    left: 81px;
+}
+
+.revealPresentation,
+.panelHolder,
+.groupHolder {
+    display: grid;
+}
+
+.closeOptions,
+.closePresentation,
+.closeProblemMatcher,
+.closeIncludeExclude,
+.closeproblemPattern,
+.closeBackgroundMatcher,
+.closeRunOptions {
+    background-color: red;
+    position: relative;
+
+    width: 20px;
+    height: 20px;
+}
+
+.closeOptions,
+.closePresentation,
+.closeRunOptions {
+    left: 85%;
+}
+
+.closeIncludeExclude,
+.closeproblemPattern {
+    left: 90%;
+}
+
+.closeProblemMatcher {
+    left: 90%;
+}
+
+.env {
+    display: grid;
+    width: inherit;
+}
+
+.envHolders {
+    display: flex;
+}
+
+.envValueHolder {
+    position: relative;
+    left: 50%;
+}
+
+.envKeyHolder,
+.shellArgsHolder {
+    position: relative;
+    left: 10px;
+}
+
+.cwd,
+.shellArgsInput,
+.shellInput,
+.envKey,
+.envValue {
+    width: 240px !important;
+    margin-top: 5px in !important;
+    margin-bottom: 5px in !important;
+    position: relative;
+    left: 15px;
+}
+
+.addShellArg,
+.saveOptions,
+.addEnvKeyValue,
+.savePresentation {
+    position: relative;
+    left: 100px;
+
+    width: 70px;
+    top: -10px;
+}
+
+.saveOptions,
+.savePresentation,
+.saveProblemMatcher,
+.saveIncludeExclude,
+.saveProblemPattern,
+.saveBackgroundMatcher,
+.saveRunOptions,
+.saveTask {
+    background-color: #4CAF50;
+}
+
+.numberWrapper input[type='text'] {
+    margin: 0px;
+}
+
+.numberWrapper label {
+    margin: 0px;
+}
+
+.patternHolder,
+.fileLocationHolder,
+.backgroundMatcherHolder,
+.baseHolder,
+.ownerHolder,
+.sourceHolder,
+.severityHolder {
+    word-wrap: break-word;
+    max-width: 400px;
+
+    font-size: large;
+    font-family: 'Times New Roman', Times, serif;
+
+    align-items: center;
+}
+
+.saver {
+    visibility: hidden;
+    width: 0px;
+    height: 0px;
+}
+
+.isDefaultTask {
+    display: none;
+}
+
+.remove {
+    background-color: red;
+}
+
+.saveTaskWrapper {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}

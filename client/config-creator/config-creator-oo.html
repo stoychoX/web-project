@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Task Configuration </title>
+
+    <!-- Load highlights.js lib -->
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/go.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/tomorrow-night-eighties.css">
+
+    <script defer src="config-creator-oo.js"></script>
+    <link rel="stylesheet" href="config-creator-oo.css">
+</head>
+
+<body>
+    <div id="json-display" class="json-display">
+        <h1 id="main-header"> Task creator </h1>
+        <button type="button" id="create" class="create"> Create </button>
+
+        <div id="jsonHolder" class="jsonHolder">
+
+        </div>
+    </div>
+
+    <div id="runOptionsBackground" class="runOptionsBackground">
+        <!-- The RunOptions fields definition -->
+        <div id="runOptions" class="runOptions">
+            <button id="closeRunOptions" class="closeRunOptions" onclick="hidePopup('runOptionsBackground')"> X
+            </button>
+
+            <div id="reevalWrapper" class="reevalWrapper">
+                <input type="checkbox" id="reevaluateOrRerun-check" class="reevaluateOrRerun-check">
+                <label for="reevalForRerin" onclick="triggerCheckbox('reevaluateOrRerun-check')"> reevaluate on rerun
+                </label>
+            </div>
+
+            <input type="text" id="runOn" class="runOn" placeholder="run on">
+
+            <button id="saveRunOptions" class="saveRunOptions" onclick="saveRunOptions()"> save </button>
+        </div>
+    </div>
+
+    <div id="commandOptionsBackground" class="commandOptionsBackground">
+        <!-- The CommandOptions fields definition -->
+        <div id="commandOptions" class="commandOptions">
+            <button id="closeOptions" class="closeOptions" onclick="hidePopup('commandOptionsBackground')"> X </button>
+
+            <input type="text" id="cwd" class="cwd" placeholder="cwd">
+
+            <label for="env">env</label>
+            <div id="env" class="env">
+                <div id="envHolders" class="envHolders">
+                    <div id="envKeyHolder" class="envKeyHolder"></div>
+                    <div id="envValueHolder" class="envValueHolder"></div>
+                </div>
+
+                <div id="kvInput" class="kvInput">
+                    <input type="text" id="envKey" class="envKey" placeholder="key">
+                    <input type="text" id="envValue" class="envValue" placeholder="value">
+                </div>
+
+                <button id="addEnvKeyValue" class="addEnvKeyValue" onclick="optionsAddEnvKeyValue()"> add </button>
+            </div>
+
+            <div id="shell" class="shell">
+                <!-- The shell which whould be used -->
+                <input type="text" id="shellInput" class="shellInput" placeholder="shell" required>
+
+                <div id="shellArgsHolder" class="shellArgsHolder"></div>
+                <input type="text" id="shellArgsInput" class="shellArgsInput" placeholder="arguments">
+                <button id="addShellArg" class="addShellArg" onclick="addShellArguments()"> add </button>
+            </div>
+
+            <button id="saveOptions" class="saveOptions" onclick="saveOptions()"> save </button>
+        </div>
+    </div>
+
+    <div id="presentationOptionsBackground" class="presentationOptionsBackground">
+        <!-- The PresentationOptions fields definition -->
+        <div id="presentationOptions" class="presentationOptions">
+            <div id="saver" class="saver"></div>
+            <button id="closePresentation" class="closePresentation"
+                onclick="hidePopup('presentationOptionsBackground')"> X </button>
+
+            <div id="revealPresentation" class="revealPresentation">
+                <label for="reveal" class="revealLabel"> reveal </label>
+                <select id="reveal" class="reveal">
+                    <option value="never"> never </option>
+                    <option value="silent"> silent </option>
+                    <option value="always"> always </option>
+                </select>
+            </div>
+
+            <div id="echoHolder" class="echoHolder">
+                <input type="checkbox" id="echo-checkbox" class="echo-checkbox">
+                <label for="echo" onclick="triggerCheckbox('echo-checkbox')"> echo </label>
+            </div>
+
+            <div id="focusHolder" class="focusHolder">
+                <input type="checkbox" id="focus-checkbox" class="focus-checkbox">
+                <label for="focus" onclick="triggerCheckbox('focus-checkbox')"> focus </label>
+            </div>
+
+            <div id="panelHolder" class="panelHolder">
+                <label for="panel" class="panelLabel"> panel </label>
+                <select id="panel-select" class="panel-select">
+                    <option value="shaded"> shaded </option>
+                    <option value="dedicated"> dedicated </option>
+                    <option value="new"> new </option>
+                </select>
+            </div>
+
+            <div id="showReuse" class="showReuse">
+                <input type="checkbox" id="showReuseMessage-check" class="showReuseMessage-check">
+                <label for="showReuseMessage" onclick="triggerCheckbox('showReuseMessage-check')"> show reuse message
+                </label>
+            </div>
+            <div id="clearHolder" class="clearHolder">
+                <input type="checkbox" id="clear-check" class="clear-check">
+                <label for="clear" onclick="triggerCheckbox('clear-check')"> clear </label>
+            </div>
+
+            <div id="groupHolder" class="groupHolder">
+                <label for="group-input" id="group-label" class="group-label"> group </label>
+                <input type="text" class="group-input" id="group-input" placeholder="Presentation group">
+            </div>
+
+            <button id="savePresentation" class="savePresentation" onclick="savePresentation()"> save </button>
+
+        </div>
+    </div>
+
+    <div id="backgroundMatcherBackground" class="backgroundMatcherBackground">
+        <!-- The BackgroundMatcher fields definition -->
+        <div id="backgroundMatcher" class="backgroundMatcher">
+            <button id="closeBackgroundMatcher" class="closeBackgroundMatcher"
+                onclick="hidePopup('backgroundMatcherBackground', true)"> X </button>
+
+            <input type="checkbox" id="activeOnStart-check" class="activeOnStart-check">
+            <label for="activeOnStart" onclick="triggerCheckbox('activeOnStart-check')"> active on start </label>
+
+            <input type="text" id="beginsPattern" class="beginsPattern" placeholder="begins pattern">
+
+            <input type="text" id="endsPattern" class="endsPattern" placeholder="ends pattern">
+
+            <button id="saveBackgroundMatcher" class="saveBackgroundMatcher" onclick="saveBackgroundMatcher()"> save
+            </button>
+        </div>
+    </div>
+
+    <div id="problemPatternBackground" class="problemPatternBackground">
+        <!-- The ProblemPattern fields definition -->
+        <div id="problemPattern" class="problemPattern">
+            <button id="closeproblemPattern" class="closeproblemPattern"
+                onclick="hidePopup('problemPatternBackground', true)"> X </button>
+
+            <div id="orderUpper">
+                <input type="text" id="regexp" class="regexp" placeholder="regular expression">
+
+                <label for="kind"> kind </label>
+                <select id="kind" class="kind">
+                    <option value="file"> file </option>
+                    <option value="location"> location </option>
+                </select>
+
+                <input type="checkbox" id="loopCheck" class="loopCheck">
+                <label for="loop" onclick="triggerCheckbox('loopCheck')"> loop </label>
+            </div>
+
+            <div id="numberWrapper" class="numberWrapper">
+                <div id="firstChunk">
+                    <input type="number" id="file" class="file" placeholder="file">
+                    <input type="number" id="location" class="location" placeholder="location">
+                    <input type="number" id="line" class="line" placeholder="line">
+                </div>
+
+                <div id="secondChunk">
+                    <input type="number" id="column" class="column" placeholder="column">
+                    <input type="number" id="endLine" class="endLine" placeholder="end line">
+                    <input type="number" id="endColumn" class="endColumn" placeholder="end column">
+                </div>
+
+                <div id="thirdChunk">
+                    <input type="number" id="severity" class="severity" placeholder="severity">
+                    <input type="number" id="code" class="code" placeholder="code">
+                    <input type="number" id="message" class="message" placeholder="message">
+                </div>
+            </div>
+
+            <button id="saveProblemPattern" class="saveProblemPattern" onclick="saveProblemPattern()"> save </button>
+        </div>
+    </div>
+
+    <div id="includeExcludeBackground" class="includeExcludeBackground">
+        <div id="includeExclude" class="includeExclude">
+            <button id="closeIncludeExclude" class="closeIncludeExclude"
+                onclick="hidePopup('includeExcludeBackground', true)"> X </button>
+
+            <div id="includeWrapper" class="includeWrapper">
+                <div id="includeHolder" class="includeHolder"></div>
+
+                <input type="text" class="inputInclude" id="inputInclude" placeholder="include">
+                <button id="addInclude" class="addInclude"
+                    onclick="addTextValueToDiv('includeHolder', 'inputInclude', false)"> add include </button>
+            </div>
+
+            <div id="excludeWrapper" class="excludeWrapper">
+                <div id="excludeHolder" class="excludeHolder"></div>
+
+                <input type="text" class="inputExclude" id="inputExclude" placeholder="exclude">
+                <button id="addExclude" class="addExclude"
+                    onclick="addTextValueToDiv('excludeHolder', 'inputExclude', false)"> add exclude </button>
+            </div>
+
+            <button id="saveIncludeExclude" class="saveIncludeExclude" onclick="saveIncludeExclude()"> save </button>
+        </div>
+
+    </div>
+
+    <div id="problemMatcherBackground" class="problemMatcherBackground">
+        <!-- The ProblemMatcher fields definition -->
+        <div id="problemMatcher" class="problemMatcher">
+            <div id="saver" class="saver"></div>
+
+            <button id="closeProblemMatcher" class="closeProblemMatcher"
+                onclick="hidePopup('problemMatcherBackground'); cleanProblemMatcher();"> X </button>
+            <div id="baseWrapper" class="baseWrapper">
+                <div id="baseHolder" class="baseHolder" ondblclick="clearDiv('baseHolder')"></div>
+
+                <input type="text" id="base" class="base" placeholder="base">
+                <button id="addBase" class="addBase" onclick="addTextValueToDiv('baseHolder', 'base', true)"> add base
+                </button>
+            </div>
+
+            <div id="ownerWrapper" class="ownerWrapper">
+                <div id="ownerHolder" class="ownerHolder" ondblclick="clearDiv('ownerHolder')"></div>
+
+                <input type="text" id="owner" class="owner" placeholder="owner">
+                <button id="addOwner" class="addOwner" onclick="addTextValueToDiv('ownerHolder', 'owner', true)"> add
+                    owner </button>
+            </div>
+
+            <div id="sourceWrapper" class="sourceWrapper">
+                <div id="sourceHolder" class="sourceHolder" ondblclick="clearDiv('sourceHolder')"></div>
+
+                <input type="text" id="source" class="source" placeholder="source">
+                <button id="addSource" class="addSource" onclick="addTextValueToDiv('sourceHolder', 'source', true)">
+                    add source </button>
+            </div>
+
+            <div id="severityWrapper" class="severityWrapper">
+                <div id="severityHolder" class="severityHolder" ondblclick="clearDiv('severityHolder')"></div>
+
+                <input type="text" id="severityMatcher" class="severityMatcher" placeholder="severity">
+                <button id="addSeverity" class="addSeverity"
+                    onclick="addTextValueToDiv('severityHolder', 'severityMatcher', true)"> add severity </button>
+            </div>
+
+            <div id="fileLocationWrapper" class="fileLocationWrapper">
+                <div id="fileLocationHolder" class="fileLocationHolder" ondblclick="clearDiv('fileLocationHolder')">
+                </div>
+
+                <input type="text" class="flString" id="flString" placeholder="file location string">
+
+                <div id="fileLocationInserters" class="fileLocationInserters">
+                    <button id="addString" class="addString" onclick="addFileLocationString()"> add string </button>
+                    <button id="addIncludeExclude" class="addIncludeExclude"
+                        onclick="showPopup('includeExcludeBackground')">
+                        include exclude </button>
+                </div>
+            </div>
+
+            <div id="patternWrapper" class="patternWrapper">
+                <div id="patternHolder" class="patternHolder" ondblclick="clearDiv('patternHolder')"></div>
+
+                <button id="addProblemPattern" class="addProblemPattern"
+                    onclick="showPopup('problemPatternBackground')"> add problem pattern </button>
+            </div>
+
+            <div id="backgrounMatcherWrapper" class="backgrounMatcherWrapper">
+                <div id="backgroundMatcherHolder" class="backgroundMatcherHolder"
+                    ondblclick="clearDiv('backgroundMatcherHolder')"></div>
+
+                <button id="addBackgroundMatcher" class="addBackgroundMatcher"
+                    onclick="showPopup('backgroundMatcherBackground')"> add background matcher </button>
+            </div>
+
+            <button id="saveProblemMatcher" class="saveProblemMatcher" onclick="saveProblemMatcher()"> save </button>
+        </div>
+    </div>
+
+    <!-- 
+            The TaskConfiguration fields definitions.
+            This is what the user sees.
+        -->
+    <div id="taskConfiguration" class="taskConfiguration">
+
+        <!-- 
+                The BaseTaskConfiguration fields definitions.
+                This is a part of TaskConfiguration.
+                Moreover we would use this div to display it
+                as popup when we add OS specific tasks.
+            -->
+        <div id="baseTaskConfiguration" class="baseTaskConfiguration">
+            <!-- A div for the type property. -->
+            <div id="typeConfig" class="typeConfig">
+                <label for="type-select-base"> type </label>
+
+                <select id="type-select-base" class="type-select-base"
+                    onchange="addElementToJSON('type', event.target.value);">
+                    <option value="null"> </option>
+                    <option value="shell"> shell </option>
+                    <option value="process"> process </option>
+                </select>
+            </div>
+
+            <!-- A div for the command element. -->
+            <div id="commandConfig" class="commandConfig">
+                <label for="command-txt"> command </label>
+
+                <input type="text" class="commandValueBase" id="commandValueBase" placeholder="Enter command here"
+                    required>
+
+                <button id="addCommandBase" class="addCommandBase" onclick="tbox = document.getElementById('commandValueBase'); 
+                    addElementToJSON('command', tbox.value); tbox.value = '';"> save
+                    command </button>
+            </div>
+
+            <!-- isBackground option -->
+            <div id="isBackgroundConfig" class="isBackgroundConfig">
+                <input type="checkbox" id="backCheckbox">
+                <label for="isBackground"
+                    onclick="triggerCheckbox('backCheckbox'); addElementToJSON('isBackground', document.getElementById('backCheckbox').checked)">
+                    is background </label>
+            </div>
+
+            <!-- A div for the CommandOptions -->
+            <div id="commandOptionsConfig" class="commandOptionsConfig">
+                <button id="addCommandOptions" class="addCommandOptions"
+                    onclick="showPopup('commandOptionsBackground')"> add command options </button>
+            </div>
+
+            <!-- A div for the arguments passed by the user to the script. -->
+            <div id="argsConfig" class="argsConfig">
+                <label for="arguments"> arguments: </label>
+                <input type="text" id="appendArgBase" class="appendArgBase" placeholder="Enter argument here">
+                <button id="appendBase" class="appendBase" onclick="tbox = document.getElementById('appendArgBase');
+                addElementToJSONArray('args', tbox.value); tbox.value = '';"> Insert </button>
+            </div>
+
+            <!-- A div to add presentation options -->
+            <div id="presentationOptionsConfig" class="presentationOptionsConfig">
+                <button id="addPresentationOptions" class="addPresentationOptions"
+                    onclick="showPopup('presentationOptionsBackground', true, 'base', 'presentationOptions')">
+                    add
+                    presentation options </button>
+            </div>
+
+            <!-- A div to add problem matcher -->
+            <div id="problemMatcherWrapper" class="problemMatcherWrapper">
+                <input type="text" id="problemMatcherInput" class="problemMatcherInput" placeholder="problem matcher"
+                    onchange="addElementToJSON('problemMatcher', event.target.value);">
+
+                <!-- Adds problem matcher in this div and removes the string -->
+                <button id="addProblemMatcher" class="addProblemMatcher"
+                    onclick="showPopup('problemMatcherBackground', true, 'base', 'problemMatcher')"> add
+                    problem matcher </button>
+            </div>
+
+            <div id="tasksWrapper" class="tasksWrapper">
+                <button id="addTask" class="addTask" onclick="addTask('tasks')"> Create a new task </button>
+            </div>
+
+        </div>
+
+        <div id="specificOSTasks" class="specificOSTasks">
+            <div id="windowsTasksHolder" class="windowsTasksHolder">
+                <button id="addWindowsTask" class="addWindowsTask" onclick="addTask('windows')"> add windows task
+                </button>
+            </div>
+
+            <div id="linuxTasksHolder" class="linuxTasksHolder">
+                <button id="addLinuxTask" class="addLinuxTask" onclick="addTask('linux')"> add linux task </button>
+            </div>
+
+            <div id="OSXTasksHolder" class="OSXTasksHolder">
+                <button id="addOSXTask" class="addOSXTask" onclick="addTask('osx')"> add OSX task </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+            The TaskDescription fields definition.
+            This would be used as popup when the user wants to
+            add another element to the `tasks` array.
+        -->
+    <div id="taskDescription" class="taskDescription">
+        <div id="taskPurpose" class="taskPurpose">
+            <label id="purpose" class="purpose">
+                <!-- Task purpose here [windows|linux|macOS|base] -->
+            </label>
+        </div>
+
+        <!-- A div for the label element -->
+        <div class="labelTask" id="labelTask">
+            <label for="label-txt"> label </label>
+
+            <input type="text" class="labelInput" id="labelInput" placeholder="Add label here">
+
+            <button id="addLabel" class="addLabel" onclick="input = document.getElementById('labelInput');
+                addElementToCurrentTask('label', input.value);
+                input.value = '';"> add
+                label </button>
+        </div>
+
+        <!-- A div for the type property. -->
+        <div id="typeTask" class="typeTask">
+            <label for="type-select"> type </label>
+
+            <select id="type-select" class="type-select"
+                onchange="addElementToCurrentTask('shell', document.getElementById('type-select').value);">
+                <option value=""></option>
+                <option value="shell"> shell </option>
+                <option value="process"> process </option>
+            </select>
+        </div>
+
+        <!-- A div for the command element. -->
+        <div id="commandTask" class="commandTask">
+            <label for="command-txt"> command </label>
+            <input type="text" class="commandInput" id="commandInput" placeholder="Enter command here" required>
+
+            <div id="commandTaskHolder" class="commandTaskHolder"></div>
+            <button id="addCommand" class="addCommand" onclick="input = document.getElementById('commandInput');
+                addElementToCurrentTask('command', input.value);
+                input.value = '';"> save command </button>
+        </div>
+
+        <!-- isBackground option -->
+        <div id="isBackgroundTask" class="isBackgroundTask">
+            <input type="checkbox" id="backCheckTask">
+            <label for="isBackground"
+                onclick="triggerCheckbox('backCheckTask'); addElementToCurrentTask('isBackground', document.getElementById('backCheckTask').checked);">
+                is background </label>
+        </div>
+
+        <!-- A div for the arguments passed by the user to the script. -->
+        <div id="argsTask" class="argsTask">
+            <label for="arguments"> arguments: </label>
+
+            <input type="text" id="appendArgTask" class="appendArgTask" placeholder="Enter argument here">
+            <button id="appendArgument" class="appendArgument" onclick="input = document.getElementById('appendArgTask');
+                addElementToCurrentTaskArray('arguments', input.value);
+                input.value = '';"> Insert </button>
+        </div>
+
+        <!-- A div for the group property. build | test -->
+        <div id="group" class="group">
+            <label for="select-group"> group </label>
+            <select id="select-group" class="select-group" onclick="handleTaskGroupCheck(event);">
+                <option value=""> </option>
+                <option value="build"> build </option>
+                <option value="shell"> shell </option>
+            </select>
+
+            <div id="isDefaultTask" class="isDefaultTask">
+                <input type="checkbox" id="groupCheck" onclick="handleIsDefaultTaskCheck();">
+                <label for="default" onclick="triggerCheckbox('groupCheck'); handleIsDefaultTaskCheck();">
+                    default </label>
+            </div>
+        </div>
+
+        <!-- A div to add presentation options -->
+        <div id="presentationOptionsWrapperTask" class="presentationOptionsWrapperTask">
+            <button id="addPresentationOptionsTask" class="addPresentationOptionsTask"
+                onclick="showPopup('presentationOptionsBackground', true, 'tasks', 'presentationOptions')">
+                add presentation options
+            </button>
+        </div>
+
+        <!-- A div to add problem matcher -->
+        <div id="problemMatcherWrapperTask" class="problemMatcherWrapperTask">
+            <input type="text" id="problemMatcherInputTask" class="problemMatcherInputTask"
+                placeholder="problem matcher" onchange="addElementToCurrentTask('problemMatcher', event.target.value);">
+            <!-- Adds problem matcher in this div and removes the string -->
+            <button id="addProblemMatcher" class="addProblemMatcher"
+                onclick="showPopup('problemMatcherBackground', true, 'tasks', 'problemMatcher')"> add
+                problem matcher </button>
+        </div>
+
+        <!-- A div to store the run options -->
+        <div id="runOptionsWrapper" class="runOptionsWrapper">
+            <button id="addRunOptions" class="addRunOptions" onclick="showPopup('runOptionsBackground')"> add run
+                options
+            </button>
+        </div>
+
+        <div id="saveTaskWrapper" class="saveTaskWrapper">
+            <button id="saveTask" class="saveTask" onclick="saveTask()"> save </button>
+            <button id="remove" class="remove" onclick="popBackTask();"> remove </button>
+        </div>
+    </div>
+
+</body>
+
+</html>
