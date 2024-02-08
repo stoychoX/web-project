@@ -2,18 +2,18 @@ body {
     font-family: 'Courier New', Courier, monospace;
     margin: 0;
     padding: 0;
+    background-color: #1E1E1E;
 }
 
 header {
-    background-color: #1E1E1E;
     color: #fff;
     text-align: center;
     padding: 10px;
 }
 
 nav {
-    background-color: #fff;
     padding: 10px;
+    background: linear-gradient(to right, #08447274, #1e1e1e00);
 }
 
 nav ul {
@@ -29,53 +29,120 @@ nav ul li {
 
 nav ul li a {
     text-decoration: none;
-    color: #333;
+    color: #ffffff;
 }
 
-.config-list ul {
-    white-space: nowrap;
+ol {
+	list-style: none;
+	counter-reset: list;
+	padding: 0 1rem;
 }
 
-.config-list ul li {
-    list-style-type: none;
-    border-top: 1px solid #1E1E1E;
-    border-bottom: 1px solid #1E1E1E;
-    margin-bottom: 1%;
-    transition: 0.5s;
-    display: block;
-}
-
-.config-list ul li a {
-    display: block;
-    border-right: 1px solid #1E1E1E;
-}
-
-.config-list ul li a span {
-    position: block;
-    display: inline-block;
-}
-
-.config-list ul li a span:nth-child(1) {
-    width: 30px;
-    border-left: 1px solid #1E1E1E;
-    padding: 10px;
-    transition: 0.5s;
-    color: #1E1E1E;
+.configList li {
+	position: relative;
+	counter-increment: list;
+	max-width: 45rem;
+	margin: 2rem auto;
+	padding: 2rem 1rem 1rem;
+	box-shadow: 0.1rem 0.1rem 1.5rem rgba(0, 0, 0, 0.3);
+	border-radius: 0.25rem;
+	overflow: hidden;
+    background: linear-gradient(to right, #247fc5, #0015b86c);
+    color: white;
     font-size: x-large;
-    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
 }
 
-.config-list ul li:hover a span:nth-child(1) {
-    color: #2196F3;
+.configList li:hover {
+    box-shadow: 0.1rem 0.1rem 1.5rem rgb(187, 193, 247);
+    transform: scale(1.05);
+}
+
+.idHolder {
+    display: none;
 }
 
 main {
     padding: 20px;
-    padding-bottom: 50px;
+    padding-bottom: 60px;
 }
 
 section {
     margin-bottom: 30px;
+    align-items: center;
+}
+
+.configTitle {
+    left: 40%;
+    position: relative;
+    width: 40%;
+}
+
+.configTitle h2 {
+    color: white;
+}
+
+.configEditorBackground {
+    background-color: rgba(53, 52, 52, 1);
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+
+    justify-content: center;
+
+    display: none;
+    z-index: 1;
+}
+
+.jsonEditor {
+    border: 0;
+    border: 2px solid #9b9b9b;
+    outline: 0;
+    font-size: 1rem;
+    color: #fff;
+    background: transparent;
+    transition: border-color 0.2s;
+    
+    position: relative;
+    height: 100%;
+    width:100%;
+}
+
+.textEditor {
+    position: relative;
+    height: 70%;
+    width:100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.configEditor {
+    position: relative;
+    height: 100vh;
+    width: max-content;
+    margin-top: 30px;
+}
+
+.title {
+    font-size: xx-large;
+    text-align: center;
+    color: white;
+}
+
+button {
+    background-color: #569cd6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
+    width: 120px;
+    height: 35px;
+}
+
+.close,
+.delete {
+    background-color: red;
 }
 
 footer {

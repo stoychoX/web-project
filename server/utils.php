@@ -5,7 +5,6 @@ function throw_and_die($error) {
         "Status" => false,
         "Content"=> $error
     );
-    header("Content-Type: application/json");
     $json = json_encode($data);
     echo $json;
     die();
@@ -13,10 +12,9 @@ function throw_and_die($error) {
 
 function succeed_many($arr) {
     $data = array(
-        "Status"=> true,
-        "Content"=> json_encode($arr)
+        "Status" => true,
+        "Content" => json_encode($arr)
     );
-    header("Content-Type: application/json");
     echo json_encode($data);
 }
 
@@ -25,9 +23,8 @@ function succeed($message) {
         "Status"=> true,
         "Content"=> $message
     );
-    // header("Content-Type: application/json");
+
     $json = json_encode($data);
-    http_response_code(200);
     echo $json;
     die();
 }

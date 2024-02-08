@@ -18,7 +18,8 @@
 <body>
     <div id="json-display" class="json-display">
         <h1 id="main-header"> Task creator </h1>
-        <button type="button" id="create" class="create"> Create </button>
+        <button type="button" id="create" class="create" onclick="addTaskToDatabase();"> Create </button>
+        <button type="button" id="close" class="close" onclick="exit();"> Close </button>
 
         <div id="jsonHolder" class="jsonHolder">
 
@@ -305,6 +306,12 @@
                 as popup when we add OS specific tasks.
             -->
         <div id="baseTaskConfiguration" class="baseTaskConfiguration">
+            <div id="taskName" class="taskName">
+                <label> Configuration name </label>
+                <input type="text" id="configName" placeholder="configuration name" required>
+            </div>
+
+
             <!-- A div for the type property. -->
             <div id="typeConfig" class="typeConfig">
                 <label for="type-select-base"> type </label>
@@ -361,13 +368,18 @@
 
             <!-- A div to add problem matcher -->
             <div id="problemMatcherWrapper" class="problemMatcherWrapper">
-                <input type="text" id="problemMatcherInput" class="problemMatcherInput" placeholder="problem matcher"
-                    onchange="addElementToJSON('problemMatcher', event.target.value);">
+                <input type="text" id="problemMatcherInput" class="problemMatcherInput"
+                    placeholder="problem matcher string value">
+
+                <button id="addProblemMatcherString" class="addProblemMatcherString"
+                    onclick="tbox = document.getElementById('problemMatcherInput'); addElementToJSONArray('problemMatcher', tbox.value); tbox.value = '';">
+                    add
+                    problem matcher </button>
+
 
                 <!-- Adds problem matcher in this div and removes the string -->
                 <button id="addProblemMatcher" class="addProblemMatcher"
-                    onclick="showPopup('problemMatcherBackground', true, 'base', 'problemMatcher')"> add
-                    problem matcher </button>
+                    onclick="showPopup('problemMatcherBackground', true, 'base', 'problemMatcher')"> advanced problem matcher </button>
             </div>
 
             <div id="tasksWrapper" class="tasksWrapper">
@@ -421,7 +433,7 @@
             <label for="type-select"> type </label>
 
             <select id="type-select" class="type-select"
-                onchange="addElementToCurrentTask('shell', document.getElementById('type-select').value);">
+                onchange="addElementToCurrentTask('type', document.getElementById('type-select').value);">
                 <option value=""></option>
                 <option value="shell"> shell </option>
                 <option value="process"> process </option>
@@ -453,7 +465,7 @@
 
             <input type="text" id="appendArgTask" class="appendArgTask" placeholder="Enter argument here">
             <button id="appendArgument" class="appendArgument" onclick="input = document.getElementById('appendArgTask');
-                addElementToCurrentTaskArray('arguments', input.value);
+                addElementToCurrentTaskArray('args', input.value);
                 input.value = '';"> Insert </button>
         </div>
 
@@ -484,11 +496,16 @@
         <!-- A div to add problem matcher -->
         <div id="problemMatcherWrapperTask" class="problemMatcherWrapperTask">
             <input type="text" id="problemMatcherInputTask" class="problemMatcherInputTask"
-                placeholder="problem matcher" onchange="addElementToCurrentTask('problemMatcher', event.target.value);">
+                placeholder="problem matcher string value">
+
+            <button id="addProblemMatcherString" class="addProblemMatcherString"
+                onclick="tbox = document.getElementById('problemMatcherInputTask'); addElementToCurrentTaskArray('problemMatcher', tbox.value); tbox.value = '';">
+                add
+                problem matcher </button>
+
             <!-- Adds problem matcher in this div and removes the string -->
             <button id="addProblemMatcher" class="addProblemMatcher"
-                onclick="showPopup('problemMatcherBackground', true, 'tasks', 'problemMatcher')"> add
-                problem matcher </button>
+                onclick="showPopup('problemMatcherBackground', true, 'tasks', 'problemMatcher')"> advanced problem matcher </button>
         </div>
 
         <!-- A div to store the run options -->

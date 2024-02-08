@@ -2,17 +2,19 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "My Task",
-            "command": "echo hello world",
+            "label": "hello world",
             "type": "shell",
-            "args": [],
-            "problemMatcher": [
-                "$tsc"
+            "command": "echo",
+            "args": [
+                "hello world"
             ],
+            "group": "build",
             "presentation": {
                 "reveal": "always"
             },
-            "group": "build"
+            "problemMatcher": [
+                "$tsc"
+            ]
         }
     ]
 }

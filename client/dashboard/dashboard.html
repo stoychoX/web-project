@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,31 +8,47 @@
     <link rel="stylesheet" href="dashboard.css">
     <script defer src="load-dashboard.js"></script>
 </head>
+
+<div id="configEditorBackground" class="configEditorBackground">
+    <div id="configEditor" class="configEditor">
+        <label id="title" class="title"> Edit config </label>
+
+        <div id="textEditor" class="textEditor">
+            <textarea id="jsonEditor" class="jsonEditor" placeholder="" name="jsonEditor"></textarea>
+        </div>
+
+        <div id="editorButtons" class="editorButtons">
+            <button id="download" class="download" onclick="downloadConfig();"> Download </button>
+            <button id="save" class="save" onclick="saveConfig();"> Save </button>
+            <button id="load" class="load" onclick="startLoadingRecord();"> Duplicate </button>
+            <button id="delete" class="delete" onclick="deleteRecord();"> Delete </button>
+            <button id="close" class="close" onclick="closeEditor();"> Close </button>
+        </div>
+    </div>
+</div>
+
 <body>
     <header>
-        <h1 id="main-header"> Welcome back,  </h1>
+        <h1 id="main-header"> Welcome back, </h1>
     </header>
 
     <nav>
         <ul>
-            <li> <a href="#"> Add configuration </a> </li>
-            <li> <a href="#"> Logout </a> </li>
+            <li> <a href="#" onclick="addConfig();"> Add configuration </a> </li>
+            <li> <a href="#" onclick="logout();"> Logout </a> </li>
         </ul>
     </nav>
 
     <main>
         <section>
-            <h2> My configurations </h2>
-            <div class="config-list" id="config-list">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <span> 
-                                config name first
-                            </span>
-                        </a>
-                    </li>
-                </ul>
+            <div id="configTitle" class="configTitle">
+                <h2> My configurations </h2>
+            </div>
+
+            <div class="configList" id="configList">
+                <ol id="configHolder" class="configHolder">
+                    <!-- configs go here -->
+                </ol>
             </div>
         </section>
     </main>
@@ -41,4 +57,5 @@
         <p>&copy; VSTCS </p>
     </footer>
 </body>
+
 </html>

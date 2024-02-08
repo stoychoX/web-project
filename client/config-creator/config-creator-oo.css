@@ -60,7 +60,8 @@ body {
 }
 
 /* Create config button styles. */
-.create {
+.create,
+.close {
     background-color: #569cd6;
     color: #fff;
     border: none;
@@ -70,6 +71,10 @@ body {
     margin-bottom: 2%;
     width: 40%;
     height: 5%;
+}
+
+.close {
+    background-color: red;
 }
 
 .create:hover {
@@ -88,7 +93,8 @@ body {
 .tasksWrapper,
 .specificOSTasks,
 .presentationOptionsConfig,
-.problemMatcherWrapper {
+.problemMatcherWrapper,
+.taskName {
     margin: 10px 10px 10px 10px;
     background: linear-gradient(to right, #084472, #1E1E1E);
     align-items: center;

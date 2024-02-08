@@ -1,6 +1,31 @@
 // json display related
-var mainJSONData = { version: "2.0.0" };
+var mainJSONData;
 var currentTaskLocation = undefined;
+
+window.onload = tryLoadRecord;
+
+function tryLoadRecord() {
+    let json = {
+        "RequestType": "FetchCache"
+    };
+    let body = JSON.stringify(json);
+
+    fetch("../../server/serve.php", {
+        method: "POST",
+        body: body
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        if(data["Status"] == false) {
+            mainJSONData = { version: "2.0.0" };
+        }
+        else {
+            let record = data["Content"];
+            mainJSONData = JSON.parse(record);
+        }
+        showJson();
+    });
+}
 
 function showJson() {
     document.getElementById("jsonHolder").innerHTML =
@@ -116,6 +141,8 @@ function fillJSONFromDivInput(divId) {
                 inputElements[i].value = inputElements[i].defaultValue;
                 break;
             case 'checkbox':
+                if(inputElements[i].checked == false) { continue; }
+
                 toReturn[key] = inputElements[i].checked;
                 inputElements[i].checked = false;
                 break;
@@ -202,7 +229,7 @@ function savePresentation() {
     let saver = presentationDiv.querySelector('.saver');
 
     if (saver.innerHTML == "base") { addElementToJSON("presentationOptions", json); }
-    else if (saver.innerHTML == "tasks") { addElementToCurrentTask("presentationOptions", json); }
+    else if (saver.innerHTML == "tasks") { addElementToCurrentTask("presentation", json); }
 
     hidePopup("presentationOptionsBackground");
 }
@@ -382,25 +409,37 @@ function popBackTask() {
     clearTasks();
 }
 
+
+function exit() {
+    window.location.href = "../dashboard/dashboard.html";
+}
+
 function addTaskToDatabase() {
+    let name = document.getElementById("configName").value;
+
+    if(name == "") {
+        alert("Cannot add empty name of configuration");
+        return;
+    }
+
     let request = {
         "RequestType": "InsertRecord",
-        "record": mainJSONData
+        "Record": mainJSONData,
+        "Name": name
     };
 
     var jsonBody = JSON.stringify(request);
     fetch("../../server/serve.php", {
         method: 'POST',
         body: jsonBody
-    }).then(resp => resp.json())
+    })
+    .then(resp => resp.json())
     .then(data => {
-        if(data["Status"] == false)
-        {
+        if(data["Status"] == false) {
             alert("Error in saving the configuration");
         }
-        else
-        {
-            window.location.href = "../dashboard/dashboard.html";
+        else {
+            exit();
         }
-    });
+    }).catch(e => console.error(e));
 }
