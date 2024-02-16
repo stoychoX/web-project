@@ -27,7 +27,7 @@ function submitForm() {
 
     console.log(jsonBody);
 
-    fetch('http://localhost/web-project/server/serve.php', {
+    fetch('../../server/serve.php', {
         method: 'POST',
         body:   jsonBody
     })

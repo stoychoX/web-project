@@ -16,7 +16,7 @@ function tryLogin()
 
     var jsonBody = JSON.stringify(json);
 
-    fetch("http://localhost/web-project/server/serve.php", {
+    fetch("../../server/serve.php", {
         method: 'POST',
         body: jsonBody
     })
